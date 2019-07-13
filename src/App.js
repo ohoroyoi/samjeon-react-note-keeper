@@ -39,6 +39,28 @@ class App extends React.Component {
     });
   };
 
+  handleEditNote = e => {
+    // console.log(e.target.name);
+    // console.log(e.target.value);
+
+    const { name, value } = e.target;
+    const newNotes = this.state.notes.map(note => {
+      if (note.id === this.state.activeNoteId) {
+        // name은 동적으로 변하는 값이라 [] 가 필요함
+        return {
+          ...note,
+          [name]: e.target.value
+        };
+      } else {
+        return note;
+      }
+    });
+
+    this.setState({
+      notes: newNotes
+    });
+  };
+
   render() {
     return (
       <div>
@@ -56,6 +78,7 @@ class App extends React.Component {
           <Note
             list={this.state.notes}
             activeNoteId={this.state.activeNoteId}
+            onEditNote={this.handleEditNote}
           />
         </div>
       </div>
