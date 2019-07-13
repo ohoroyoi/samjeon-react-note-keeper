@@ -55,9 +55,18 @@ class App extends React.Component {
         return note;
       }
     });
+  };
 
+  handleDeleteNote = e => {
+    // N18016: 어떤 id 삭제할지??
+    const replaceNotes = this.state.notes.filter(note => {
+      return this.state.activeNoteId !== note.id;
+    });
+    console.log({ replaceNotes });
     this.setState({
-      notes: newNotes
+      notes: replaceNotes,
+      // notes 배열에서 제일 상위의 값 가져오면 될까?
+      activeNoteId: replaceNotes.length !== 0 ? replaceNotes[0].id : null
     });
   };
 
@@ -65,7 +74,7 @@ class App extends React.Component {
     return (
       <div>
         <GlobalStyle />
-        <Header />
+        <Header onDeleteNote={this.handleDeleteNote} />
         <div>
           <Navbar
             list={this.state.notes}
