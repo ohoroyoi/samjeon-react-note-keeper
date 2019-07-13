@@ -53,7 +53,10 @@ class App extends React.Component {
             onSelectNote={this.handleSelectNote} // 신형
             // onSelectNote={() => this.handleSelectNote()} // 신형
           />
-          <Note />
+          <Note
+            list={this.state.notes}
+            activeNoteId={this.state.activeNoteId}
+          />
         </div>
       </div>
     );
