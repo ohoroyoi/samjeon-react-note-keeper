@@ -8,18 +8,18 @@ import Note from "./components/Note";
 class App extends React.Component {
   state = {
     notes: [
-      {
-        id: 0,
-        title: "제목",
-        content: "ㅎㅇㅎㅇ "
-      },
-      {
-        id: 1,
-        title: "다이소",
-        content: "ㅎㅇㅎㅇ "
-      }
+      // {
+      //   id: 0,
+      //   title: "제목",
+      //   content: "ㅎㅇㅎㅇ "
+      // }
+      // {
+      //   id: 1,
+      //   title: "다이소",
+      //   content: "ㅎㅇㅎㅇ "
+      // }
     ],
-    activeNoteId: 0
+    activeNoteId: null
   };
 
   // // 원조
@@ -44,6 +44,7 @@ class App extends React.Component {
     // console.log(e.target.value);
 
     const { name, value } = e.target;
+    console.log({ name, value });
     const newNotes = this.state.notes.map(note => {
       if (note.id === this.state.activeNoteId) {
         // name은 동적으로 변하는 값이라 [] 가 필요함
@@ -54,6 +55,23 @@ class App extends React.Component {
       } else {
         return note;
       }
+    });
+
+    this.setState({
+      notes: newNotes
+    });
+  };
+  handleCreateNote = e => {
+    const createdNote = {
+      id: this.state.notes.length, //뭐시기보다 +1
+      title: "제목",
+      content: "내용"
+    };
+    // 노트루 받아옴 input textarea
+
+    this.setState({
+      notes: [...this.state.notes, createdNote],
+      activeNoteId: this.state.notes.length === 0 ? 0 : this.state.notes.length
     });
   };
 
@@ -74,7 +92,10 @@ class App extends React.Component {
     return (
       <div>
         <GlobalStyle />
-        <Header onDeleteNote={this.handleDeleteNote} />
+        <Header
+          onCreateNote={this.handleCreateNote}
+          onDeleteNote={this.handleDeleteNote}
+        />
         <div>
           <Navbar
             list={this.state.notes}
